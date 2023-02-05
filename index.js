@@ -31,3 +31,40 @@ form.appendChild(chooseLevel);
     startButton.textContent = ("Старт");
     startButton.classList.add("startBtn")
     form.appendChild(startButton);
+
+    window.application = {
+        blocks: {},
+        screens: {},
+        level: '',
+    
+        renderScreen: function(screenName) {
+          
+          if (window.application.screens[screenName]){
+            app.innerHTML = '';
+          window.application.screens[screenName]();
+          } else {
+            console.log(`this screen doesn't exist`);
+          }
+        },
+        
+        renderBlock: function(blockName, container) {
+          if (window.application.blocks[blockName]){
+            window.application.blocks[blockName](container);
+          } else {
+            console.log(`block ${blockName} doesn't exist`);
+          }
+    
+        },
+        
+      }
+// предполагалось что это будет работать
+      const levels = document.querySelectorAll('.level');
+      console.log(levels); 
+      // но тут выходит нодлист вместо элементов
+      levels.addEventListener('click', () => {
+        window.application.screens['game'] = renderScreenGame;
+        window.application.renderScreen('game');
+
+      })
+// плюс я поняла что не использую кнопку старт. пока что идеи закончились
+      
